@@ -8,18 +8,20 @@
 </head>
 <body>
 <%@ page import="java.sql.*" %>
+
 <%
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String url = "jdbc:oracle:thin:@localhost:1521:ORCL";
 		String user = "scott";
 		String pw = "tiger";
-		String name = request.getParameter("name");
+		
+		String seq = request.getParameter("seq");
 		try{
 			con = DriverManager.getConnection(url, user, pw);
-			String sql ="delete from comments where name=?";
+			String sql ="delete from comments where seq=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,name);
+			pstmt.setString(1,seq);
 			
 			pstmt.executeUpdate();
 		}catch(SQLException se){

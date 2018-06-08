@@ -10,6 +10,7 @@
 <%@ page import="java.sql.*" %>
 <table>
 <tr><th>번호</th><th>이름</th><th>소감</th><th>작성일</th></tr>
+<a href="CwriteForm.jsp"> 작성하러 가기 </a>
 <%
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -22,7 +23,7 @@
 	con = DriverManager.getConnection(url, user, pw);
 	pstmt = con.prepareStatement(sql);
 	rs = pstmt.executeQuery();
-	rs.next();
+
 	
 	while(rs.next()) {
 		int seq = rs.getInt(1);
@@ -31,20 +32,25 @@
 		String content = rs.getString(4);
 		String rdate = rs.getString(5);
 	%>
-		<tr><td><%=seq%></td>
+		<tr><td><%=seq %></td>
 			<td><%=name %></td>
 			<td><%=content %></td>
 			<td><%=rdate %></td>
 			<td>
-				<a href="delete.jsp"><input type="button" value="삭제"></input></a>
+				<input type="button" value="삭제" onclick="location.href='delete.jsp?seq=<%=seq%>'"/>
 			</td>
 		</tr>
+		
+			
 	<%
 	}
 	rs.close();
 	pstmt.close();
 	con.close();
 %>
+
+
+
 </table>
 </body>
 </html>
